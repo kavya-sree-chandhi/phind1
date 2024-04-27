@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denton Plant Factory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #333;
+        }
+        .header {
+            background-color: #000080;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+        .footer {
+            background-color: #000080;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .product {
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 10px;
+            display: inline-block;
+            width: 200px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+        .contact-form {
+            margin: 20px;
+        }
+        .contact-form input, .contact-form button {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .shopping-cart {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: #000080;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Denton Plant Factory</h1>
+        <nav>
+            <a href="#">Home</a> |
+            <a href="#">About</a> |
+            <a href="#">Contact</a>
+        </nav>
+    </div>
+
+    <div class="products">
+        <!-- Example Product 1 -->
+        <div class="product" data-id="1">
+            <img src="path/to/image1.jpg" alt="Plant Image 1">
+            <p>Plant Name: Orchid</p>
+            <p>Type: Flower</p>
+            <p>Origin: Asia</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <!-- Example Product 2 -->
+        <div class="product" data-id="2">
+            <img src="path/to/image2.jpg" alt="Plant Image 2">
+            <p>Plant Name: Aloe Vera</p>
+            <p>Type: Succulent</p>
+            <p>Origin: Africa</p>
+            <button class="add-to-cart">Add to Cart</button>
+        </div>
+        <!-- Add more products as needed -->
+    </div>
+
+    <div class="contact-form">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" name="fullname" placeholder="Full Name" required>
+            <input type="tel" name="contactnumber" placeholder="Contact Number" required>
+            <input type="email" name="emailid" placeholder="Email ID" required>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div class="shopping-cart">
+        <h3>Shopping Cart</h3>
+        <p>Items: 0</p>
+    </div>
+
+    <div class="footer">
+        &copy; 2023 Denton Plant Factory. All rights reserved.
+    </div>
+
+    <script>
+        // Initialize an empty cart
+        let cart = [];
+
+        // Function to add an item to the cart
+        function addToCart(productId) {
+            // Find the product in the DOM
+            const product = document.querySelector(`.product[data-id="${productId}"]`);
+            // Extract product details
+            const productDetails = {
+                id: productId,
+                name: product.querySelector('p').textContent,
+                type: product.querySelectorAll('p')[1].textContent,
+                origin: product.querySelectorAll('p')[2].textContent
+            };
+            // Add product to cart
+            cart.push(productDetails);
+            // Update cart UI
+            updateCartUI();
+        }
+
+        // Function to update the cart UI
+        function updateCartUI() {
+            // Find the shopping cart element
+            const cartElement = document.querySelector('.shopping-cart');
+            // Update the item count
+            cartElement.querySelector('p').textContent = `Items: ${cart.length}`;
+        }
+
+        // Add event listeners to all "Add to Cart" buttons
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const productId = button.closest('.product').dataset.id;
+                addToCart(productId);
+            });
+        });
+
+        // Initialize the cart UI
+        updateCartUI();
+    </script>
+</body>
+</html>
